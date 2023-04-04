@@ -9,7 +9,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: fetch num squared
-        id: get square
+        id: get_square
         uses: ./
         with:
           number: 11
