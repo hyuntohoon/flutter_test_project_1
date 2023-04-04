@@ -1,0 +1,30 @@
+# action.yaml
+name: 'Test Github Action'
+descripton: 'Test to Github Action'
+inputs:
+  num:
+    description: 'Enter a number'
+    required: true
+    defalut: "1"
+output:
+  num_squared:
+    description: 'Square of the input'
+    value: ${{ step.get.square.outputs.num_squared }}
+runs:
+  using: 'composite'
+  step:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    - name: Install Dependencies
+      run: pip install -r reqiirements.txt
+      shell: bash
+    - name: Pass Inputs to Shell
+      run: |
+        echo "INPUT_NUM=${{ input.num }}" >> $GITHUB_ENV
+      shell: bash
+    - name: Fetch the number's square
+      id: get-square
+      run: python src/get_num_square.py
+      shell: bash
